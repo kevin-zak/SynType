@@ -45,7 +45,8 @@ class Game():
             self.check_events()
             
             self.display.fill(self.WHITE)
-            self.draw_text("In Typing Game...", 20, 100, 100)
+            self.drawLeftPannel()
+            # self.draw_text("In Typing Game...", 20, 100, 100)
 
             self.draw_text(self.input_text, 30, self.input_startx, self.input_starty)
             self.window.blit(self.display,(0,0))
@@ -54,7 +55,17 @@ class Game():
             pygame.display.update()
             self.reset_keys()
 
-
+    def drawLeftPannel(self):
+        y = 200
+        for line in self.lines:
+            if line[0] == '\t':
+                x = 150
+            else:
+                x=100
+            self.draw_code(line, 30, x, y)
+            y+=50
+        
+        pygame.draw.line(self.window, self.BLACK, (400,0), (400,800), 2)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -81,6 +92,13 @@ class Game():
     def reset_keys(self):
         self.LEFT_KEY, self.RIGHT_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
 
+
+    def draw_code(self, text, size, x, y):
+        font = pygame.font.Font(os.path.join("assets", "MonoLight.ttf"), size) 
+        text_surface = font.render(text, True, self.BLACK)
+        text_rect = text_surface.get_rect()
+        text_rect.midleft = (x,y)
+        self.display.blit(text_surface, text_rect)
 
     def draw_text(self, text, size, x, y):
         font = pygame.font.Font(os.path.join("assets", "ABCfont.ttf"), size) 
