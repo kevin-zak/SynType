@@ -11,7 +11,11 @@ class Game():
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
         pygame.display.set_caption('SynType')
 
-
+        # specific game values, language, code segment, lines, etc.
+        self.language = "C++"
+        self.segment = 'assets/C++/1.txt'
+        self.lines = open(self.segment).read().split('\n')
+        print(self.lines)
 
         # Menu Object
         self.curr_menu = Menu(self)
