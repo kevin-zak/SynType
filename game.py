@@ -17,7 +17,6 @@ class Game():
         self.language = "C++"
         self.segment = 'assets/C++/1.txt'
         self.lines = open(self.segment).read().split('\n')
-        print(self.lines)
 
         # Menu Object
         self.curr_menu = Menu(self)
@@ -32,7 +31,7 @@ class Game():
         self.GREEN = (100, 255, 50)
         self.BLACK = (0,0,0)
         self.WHITE = (255,255,255)
-
+        self.BORDER_COLOR = self.BLACK
 
         #Game Status
         self.running, self.playing = True, False
@@ -50,13 +49,19 @@ class Game():
             
             self.window.blit(self.display,(0,0))
 
-
+            self.drawBorder()
             pygame.display.update()
             self.reset_keys()
 
+    def drawBorder(self):
+        #draw midline
+        pygame.draw.line(self.window, self.BORDER_COLOR, (self.DISPLAY_W/2,0), (self.DISPLAY_W/2,self.DISPLAY_H), 5)
 
-
-
+        #draw border
+        pygame.draw.line(self.window, self.BORDER_COLOR, (0,0), (self.DISPLAY_W,0), 10)
+        pygame.draw.line(self.window, self.BORDER_COLOR, (0,0), (0,self.DISPLAY_H), 10)
+        pygame.draw.line(self.window, self.BORDER_COLOR, (self.DISPLAY_W,self.DISPLAY_H), (self.DISPLAY_W,0), 15)
+        pygame.draw.line(self.window, self.BORDER_COLOR, (self.DISPLAY_W,self.DISPLAY_H), (0,self.DISPLAY_H), 15)
 
     def drawPannels(self):
         y = 200
