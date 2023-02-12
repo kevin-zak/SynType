@@ -52,6 +52,8 @@ class Game():
         self.seg_lines = open(self.segment).read().split('\n')
         self.input_lines = []
         self.curr_line = ""
+        self.done = False
+        self.error = False
         self.BORDER_COLOR = self.BLACK
 
     def game_loop(self):
@@ -135,12 +137,15 @@ class Game():
                         # Check correctness
                         if(self.input_lines == self.seg_lines):
                             self.BORDER_COLOR = self.GREEN
+                            
                         else:
                             self.BORDER_COLOR = self.RED
-
                         self.done = True
                         
-
+                        self.drawBorder()
+                        pygame.display.update()
+                        time.sleep(3)
+                        self.newGame()
 
                         break
                     
