@@ -29,7 +29,7 @@ class Menu():
             self.game.check_events()
             self.check_input()
             self.game.display.fill(self.background)
-            self.game.draw_text("Welcome to SynType!", 150, self.game.DISPLAY_W/2, self.game.DISPLAY_H/10)
+            self.game.draw_text("Welcome to SynType!", 150, self.game.DISPLAY_W/2, self.game.DISPLAY_H/4)
             self.game.draw_text("Type", 50, self.midx, self.starty)
             self.draw_cursor()
             self.blit_screen()
