@@ -1,31 +1,36 @@
 import pygame, os
 from menu import Menu
+import time, random
 class Game():
     def __init__(self):
         pygame.init()
-
-
-        
 
         # Display Settings
         self.DISPLAY_W, self.DISPLAY_H = 1600, 900
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
         pygame.display.set_caption('SynType')
+        
+        #Some colors
+        self.GREEN = (100, 255, 50)
+        self.BLACK = (0,0,0)
+        self.WHITE = (255,255,255)
+        self.BORDER_COLOR = self.BLACK
 
         # specific game values, language, code segment, lines, etc.
         self.language = "C++"
-        self.segment = 'assets/C++/1.txt'
-        self.seg_lines = open(self.segment).read().split('\n')
+        self.newGame()
+        # self.segment = 'assets/C++/1.txt'
+        # self.seg_seg_lines = open(self.segment).read().split('\n')
 
         # Menu Object
         self.curr_menu = Menu(self)
 
-
-
         # Text Locations
         self.input_startx = self.DISPLAY_W / 2.0 
         self.input_starty = 200
+        self.cursor_x = 900
+        self.cursor_y = 100
 
         #Some colors
         self.GREEN = (100, 255, 50)
@@ -42,14 +47,22 @@ class Game():
         self.error = False
         self.done = False
 
+    def newGame(self):
+        self.segment = os.path.join("assets/" + self.language, (random.choice(os.listdir(os.path.join("assets", self.language)))))
+        self.seg_lines = open(self.segment).read().split('\n')
+        self.input_lines = []
+        self.curr_line = ""
+        self.BORDER_COLOR = self.BLACK
+
     def game_loop(self):
         while self.playing:
             # Check for keypresses..
             self.check_events()
             
             self.display.fill(self.WHITE)
-            self.drawPannels()
             
+            self.drawPannels()
+
             self.window.blit(self.display,(0,0))
 
             self.drawBorder()
@@ -66,6 +79,8 @@ class Game():
         pygame.draw.line(self.window, self.BORDER_COLOR, (0,0), (0,self.DISPLAY_H), 10)
         pygame.draw.line(self.window, self.BORDER_COLOR, (self.DISPLAY_W,self.DISPLAY_H), (self.DISPLAY_W,0), 15)
         pygame.draw.line(self.window, self.BORDER_COLOR, (self.DISPLAY_W,self.DISPLAY_H), (0,self.DISPLAY_H), 15)
+        self.drawCursor(self.cursor_x, self.cursor_y)
+
 
     def drawPannels(self):
         y = 200
@@ -96,7 +111,12 @@ class Game():
         self.draw_code(self.curr_line, 30, x, y, False)
         
 
-    
+    def drawCursor(self, x, y):
+        if time.time() % 1 > 0.5:
+            return
+        x_coord = x
+        y_coord = y
+        pygame.draw.line(self.window, self.BLACK, (x_coord, y_coord - 15), (x_coord, y_coord+15), 3)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -167,6 +187,8 @@ class Game():
             text_surface = font.render(text, True, self.BLACK)
         text_rect = text_surface.get_rect()
         text_rect.midleft = (x,y)
+        self.cursor_x = text_rect.midright[0]
+        self.cursor_y = text_rect.midright[1]
         self.display.blit(text_surface, text_rect)
 
 

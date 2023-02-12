@@ -1,0 +1,7 @@
+if(x < 5){
+	return true;
+}
+else{
+	x %= 2;
+	return false;
+}

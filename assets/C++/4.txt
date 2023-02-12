@@ -1,0 +1,4 @@
+while(x > 0){
+	cout << x << endl;
+	x --;
+}
