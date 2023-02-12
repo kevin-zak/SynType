@@ -49,6 +49,7 @@ class Menu():
         if self.game.START_KEY:
             if self.state == "Type":
                 self.game.playing = True
-            
+                self.game.done = False
+                self.game.input_lines.pop()
             # Once a game has been started, don't display menu anymore
             self.run_display = False
