@@ -86,12 +86,13 @@ class Game():
 
     def drawPannels(self):
         y = 200
-        x = 0
         for line in self.seg_lines:
-            if line[0] == '\t':
-                x = 150
-            else:
-                x=100
+            x = 100
+            for char in line:
+                if char == '\t':
+                    x+=50
+                else:
+                    break
             self.draw_code(line, 30, x, y, True)
             y+=50
         y = 200
@@ -99,16 +100,20 @@ class Game():
             if(len(line) == 0):
                 continue
             self.check_error(line, ind)
-            if line[0] == '\t':
-                x = self.input_startx+150
-            else:
-                x = self.input_startx+100
+            x = self.input_startx+100
+            for char in line:
+                if char == '\t':
+                    x+=50
+                else:
+                    break
             self.draw_code(line, 30, x, y, False)
             y+=50
-        if(len(self.curr_line) > 0 and self.curr_line[0] == '\t'):
-            x = self.input_startx+150
-        else:
-            x = self.input_startx+100
+        x = self.input_startx+100
+        for char in self.curr_line:
+            if char == '\t':
+                x+=50
+            else:
+                break
         self.check_error(self.curr_line, len(self.input_lines))
         self.draw_code(self.curr_line, 30, x, y, False)
         
